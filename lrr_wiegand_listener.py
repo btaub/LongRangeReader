@@ -146,6 +146,11 @@ if __name__ == "__main__":
             fc = int(wiegand[1:9], 2)
             cn = int(wiegand[9:25], 2)
             cn2 = int(wiegand[1:25], 2)
+        elif bits == "34":
+            head = "000000001001"
+            fc = int(wiegand[1:17], 2)
+            cn = int(wiegand[17:33], 2)
+            cn2 = int(wiegand[1:33], 2) # Maybe
         elif bits == "35":
             head = "0000000101"
             fc = int(wiegand[2:14], 2)
@@ -156,6 +161,11 @@ if __name__ == "__main__":
             fc = int(wiegand[1:17], 2)
             cn = int(wiegand[17:36], 2)
             cn2 = int(wiegand[1:36], 2)
+        elif bits == "48":
+            head = "00001"
+            fc = int(wiegand[8:24], 2)
+            cn = int(wiegand[29:47], 2)
+            cn2 = int(wiegand[8:47], 2) # Maybe
         else:
             head = "0"
             fc = -1
