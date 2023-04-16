@@ -90,7 +90,7 @@ if __name__ == "__main__":
     import os
     import csv
 
-    print "Starting Wiegand listener..."
+    print("Starting Wiegand listener...")
 
     CARDS_CSV_FILE = "cards.csv"
     id_num = 0
@@ -104,17 +104,17 @@ if __name__ == "__main__":
     def validateCSV(file):
         global id_num
         if not os.path.exists(file):
-            print "[!] No cards.csv found! Creating one..."
+            print("[!] No cards.csv found! Creating one...")
             with open(file, 'w') as csvfile:
                 fieldnames = ['id', 'bit_length', 'wiegand_binary', 'wiegand_hex', 'iclass_std_enc_hex', 'fac_code',
                               'card_num', 'card_num_no_fac']
                 csvwriter = csv.DictWriter(csvfile, lineterminator='\n', fieldnames=fieldnames)
                 csvwriter.writeheader()
-            print "[*] cards.csv created!"
+            print("[*] cards.csv created!")
         else:
             with open(file, 'r') as csvfile:
                 if not ("wiegand_binary" in csvfile.readline()):
-                    print "[!] Invalid CSV file!"
+                    print("[!] Invalid CSV file!")
                     quit()
         # Get ID of last record
         with open(file, 'r') as csvfile:
@@ -137,7 +137,7 @@ if __name__ == "__main__":
             csvwriter.writerow(
                 [id_num, bits, wiegand_binary, wiegand_hex, enc_hex, fac_code, card_num, card_num_no_fac])
         os.system("sync")
-        print "[*] Added to cards.csv"
+        print("[*] Added to cards.csv")
 
     # Decodes the wiegand data based on the bitlength (bits)
     def decodeWiegandData(bits, wiegand):
@@ -184,25 +184,25 @@ if __name__ == "__main__":
         addCardsToCSV(bits, wiegand_binary, wiegand_hex, enc_hex, fac_code, card_num, card_num_no_fac)
 
         # Debug output to console
-        print "Bit Length: " + bits
-        print "Facility Code: " + fac_code
+        print("Bit Length: " + bits)
+        print("Facility Code: " + fac_code)
         
-        print "Card Number: " + card_num
-        print "Card Number without Facility Code: " + card_num_no_fac
-        print "Wiegand Data: " + wiegand_binary
-        print "Wiegand Hex Data: " + wiegand_hex
-        print "iCLASS Standard Encrypted Hex Data: " + enc_hex
+        print("Card Number: " + card_num)
+        print("Card Number without Facility Code: " + card_num_no_fac)
+        print("Wiegand Data: " + wiegand_binary)
+        print("Wiegand Hex Data: " + wiegand_hex)
+        print("iCLASS Standard Encrypted Hex Data: " + enc_hex)
  #      cmdProxmark(wiegand_hex)
     
     # Create CSV file on boot if one does not exist
     validateCSV(CARDS_CSV_FILE)
     # Initialize pigpio and start the wiegand decoder, listening for Data0 and Data1 on pins 14 and 15, respectively
     pi = pigpio.pi()
-    w = lrr_wiegand_listener.decoder(pi, 14, 15, callback)
+    w = lrr_wiegand_listener.decoder(pi, 23, 24, callback)
     
     # Keep the script running until it is manually stopped with Control+C or killed
     while True:
-        raw_input()
+        input()
     w.cancel()
     pi.stop()
     

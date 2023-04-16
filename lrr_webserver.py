@@ -13,7 +13,7 @@ import os
 import csv
 
 CSV_FILE = "cards.csv"
-PORT = 80
+PORT = 8080
 Listeners = []
 
 HTML = """
@@ -129,7 +129,7 @@ def check_file():
     if not line:
         cards_file.seek(position)
     else:
-        print "File changed detected!"
+        print("File changed detected!")
         for l in Listeners:
             l.write_message(line)
 
@@ -138,7 +138,7 @@ class CredentialHandler(tornado.websocket.WebSocketHandler):
         return True
 
     def open(self):
-        print 'new connection'
+        print('new connection')
         Listeners.append(self)
         #self.write_message("Connected!")
         # Initially print out contents of file
@@ -152,7 +152,7 @@ class CredentialHandler(tornado.websocket.WebSocketHandler):
         pass
 
     def on_close(self):
-        print 'connection closed'
+        print('connection closed')
         Listeners.remove(self)
 
 class IndexHandler(tornado.web.RequestHandler):
