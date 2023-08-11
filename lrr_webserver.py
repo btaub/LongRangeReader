@@ -50,6 +50,7 @@ HTML = """
 <div id="links">
     <a href="./cards.csv">Download CSV</a>&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="#" onclick="confirm('Are you sure you want to clear cards.csv?')?document.location.href='./clearcsv':null;">Clear CSV</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="#" onclick="confirm('Are you sure you want to shutdown the system?')?document.location.href='./poweroff':null;">Power Off</a>&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
 <div id="file">
     <table id=credentials>
@@ -179,10 +180,16 @@ class ClearCSV(tornado.web.RequestHandler):
         cards_file.seek(os.path.getsize(CSV_FILE))
         self.redirect('/')
 
+class PowerOff(tornado.web.RequestHandler):
+    def get(self):
+        os.popen('sudo poweroff')
+        self.redirect('/')
+
 application = tornado.web.Application([
     (r'/ws', CredentialHandler),
     (r'/', IndexHandler),
     (r'/clearcsv', ClearCSV),
+    (r'/cards.csv', CSVDownloadHandler),
     (r'/cards.csv', CSVDownloadHandler)
 ])
 
