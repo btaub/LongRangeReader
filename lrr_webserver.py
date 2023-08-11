@@ -190,7 +190,7 @@ application = tornado.web.Application([
     (r'/', IndexHandler),
     (r'/clearcsv', ClearCSV),
     (r'/cards.csv', CSVDownloadHandler),
-    (r'/cards.csv', CSVDownloadHandler)
+    (r'/poweroff', PowerOff)
 ])
 
 http_server = tornado.httpserver.HTTPServer(application)
